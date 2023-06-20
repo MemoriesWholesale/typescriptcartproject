@@ -141,6 +141,7 @@ class Shop{
 
     static loginUser(event:Event){
         event.preventDefault()
+        new Shop()
         const name = (<HTMLInputElement>document.getElementById('username')).value
         const age = parseInt((<HTMLInputElement>document.getElementById('userage')).value)
         Shop.myUser = User.loginUser(name,age)
@@ -156,6 +157,7 @@ class Shop{
         const ShopArea = document.getElementById('shoparea')
         for (let item of this._stock){
             ShopArea?.appendChild(item.ItemHTMLElement())
+            console.log(item)
         }
     }
 
@@ -173,12 +175,13 @@ class Shop{
     public set stock(value: Item[]) {
         this._stock = value;
     }
-    constructor(itemA=new Item(uuidv4(),'lollipop',4,'licky licky'),
-                itemB =new Item(uuidv4(),'laffy taffy',2,'sticky icky'),
-                itemC = new Item(uuidv4(),'chocolates',5,'yum yum'),
-                itemD = new Item(uuidv4(),'candy cane',1,'crickle crackle'),
-                itemE = new Item(uuidv4(),'bubblegum',2,'pop!'),
-                itemF = new Item(uuidv4(),'gummy worms',3,'creepy crawlie')){
+    constructor(){
+                    let itemA=new Item(uuidv4(),'lollipop',4,'licky licky')
+                    let itemB =new Item(uuidv4(),'laffy taffy',2,'sticky icky')
+                    let itemC = new Item(uuidv4(),'chocolates',5,'yum yum')
+                    let itemD = new Item(uuidv4(),'candy cane',1,'crickle crackle')
+                    let itemE = new Item(uuidv4(),'bubblegum',2,'pop!')
+                    let itemF = new Item(uuidv4(),'gummy worms',3,'creepy crawlie')
         this._stock = [itemA,itemB,itemC,itemD,itemE,itemF]
         this.ShowItems()
         this.UpdateCart()
@@ -195,6 +198,7 @@ const RemoveAlls = document.getElementsByClassName('remove-all')
 for (let i = 0; i < RemoveAlls.length; i ++){
     RemoveAlls[i].addEventListener('click',(_)=>{})
 }
+
 
 const loginbutton = <HTMLInputElement>document.getElementById('submitbutton')
 loginbutton.addEventListener('click',(event)=>Shop.loginUser(event))
