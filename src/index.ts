@@ -139,7 +139,10 @@ class User{
 class Shop{
     public static myUser:User|null
 
-    static loginUser(name:string,age:number){
+    static loginUser(event:Event){
+        event.preventDefault()
+        const name = (<HTMLInputElement>document.getElementById('username')).value
+        const age = parseInt((<HTMLInputElement>document.getElementById('userage')).value)
         Shop.myUser = User.loginUser(name,age)
         const LoginPage = document.getElementById('login')
         LoginPage?.classList.replace('is-visible','is-invisible')
@@ -170,7 +173,12 @@ class Shop{
     public set stock(value: Item[]) {
         this._stock = value;
     }
-    constructor(itemA:Item,itemB:Item,itemC:Item,itemD:Item,itemE:Item,itemF:Item){
+    constructor(itemA=new Item(uuidv4(),'lollipop',4,'licky licky'),
+                itemB =new Item(uuidv4(),'laffy taffy',2,'sticky icky'),
+                itemC = new Item(uuidv4(),'chocolates',5,'yum yum'),
+                itemD = new Item(uuidv4(),'candy cane',1,'crickle crackle'),
+                itemE = new Item(uuidv4(),'bubblegum',2,'pop!'),
+                itemF = new Item(uuidv4(),'gummy worms',3,'creepy crawlie')){
         this._stock = [itemA,itemB,itemC,itemD,itemE,itemF]
         this.ShowItems()
         this.UpdateCart()
@@ -188,6 +196,5 @@ for (let i = 0; i < RemoveAlls.length; i ++){
     RemoveAlls[i].addEventListener('click',(_)=>{})
 }
 
-
-const loginform = <HTMLInputElement>document.getElementById('loginform')
-loginform.addEventListener('submit',(_)=>Shop.loginUser(loginform.value[0],parseInt(loginform.value[1])))
+const loginbutton = <HTMLInputElement>document.getElementById('submitbutton')
+loginbutton.addEventListener('click',(event)=>Shop.loginUser(event))
