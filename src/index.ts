@@ -38,7 +38,7 @@ class Item{
 
     ItemHTMLElement():HTMLDivElement{
         const ItemDisplay = document.createElement('div')
-        ItemDisplay.innerHTML = `${this._name} ${this._price} ${this._description} <button class = 'add-one' id = 'a1${this._id}></button>`
+        ItemDisplay.innerHTML = `${this._name} ${this._price} ${this._description} <button class = 'add-one' id = 'a1${this._id}'>Add One</button>`
         const AddButton = document.getElementById(`a1${this._id}`)
         AddButton?.addEventListener('click',(_)=>{})
         return ItemDisplay
@@ -176,12 +176,12 @@ class Shop{
         this._stock = value;
     }
     constructor(){
-                    let itemA=new Item(uuidv4(),'lollipop',4,'licky licky')
-                    let itemB =new Item(uuidv4(),'laffy taffy',2,'sticky icky')
-                    let itemC = new Item(uuidv4(),'chocolates',5,'yum yum')
-                    let itemD = new Item(uuidv4(),'candy cane',1,'crickle crackle')
-                    let itemE = new Item(uuidv4(),'bubblegum',2,'pop!')
-                    let itemF = new Item(uuidv4(),'gummy worms',3,'creepy crawlie')
+        let itemA=new Item(uuidv4(),'lollipop',4,'licky licky')
+        let itemB =new Item(uuidv4(),'laffy taffy',2,'sticky icky')
+        let itemC = new Item(uuidv4(),'chocolates',5,'yum yum')
+        let itemD = new Item(uuidv4(),'candy cane',1,'crickle crackle')
+        let itemE = new Item(uuidv4(),'bubblegum',2,'pop!')
+        let itemF = new Item(uuidv4(),'gummy worms',3,'creepy crawlie')
         this._stock = [itemA,itemB,itemC,itemD,itemE,itemF]
         this.ShowItems()
         this.UpdateCart()
