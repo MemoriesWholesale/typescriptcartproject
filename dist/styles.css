@@ -1,7 +1,65 @@
+body{
+    background-color: cadetblue;
+}
+
+#login{
+    display: flex;
+    justify-content: center;
+    
+}
+
+#cartarea{
+    margin-right: 0px;
+    background-color:indigo;
+    display: list-item;
+    text-align: center;
+    align-items: center;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    -webkit-text-fill-color:lightpink;
+}
+
+#shoparea{
+    display:list-item;
+    text-align: center;
+    outline: auto;
+    background-color:cyan;
+    outline-color: darkmagenta;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    -webkit-text-fill-color:deeppink;
+    align-items: center;
+}
+
 .is-invisible{
-    display:none;
+    content-visibility: hidden;
 }
 
 .is-visible{
-    display:block;
+    content-visibility: visible;
 } 
+
+.jumbotron{
+    text-align: center;
+    text-decoration-style: wavy;
+    text-decoration-line: underline;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color:cadetblue;
+    -webkit-text-fill-color: blueviolet;
+}
+
+#shoparea button{
+    border-radius: 10px;
+    max-width: 50vh;
+    background-color: plum;
+    -webkit-text-fill-color: darkmagenta;
+}
+
+#login button{
+    border-radius:20px;
+    background-color: darkmagenta;
+    -webkit-text-fill-color: bisque;
+}
+
+#cartarea button{
+    border-radius: 15px;
+    background-color: darkorchid;
+}

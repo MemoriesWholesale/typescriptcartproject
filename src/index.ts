@@ -38,9 +38,8 @@ class Item{
 
     ItemHTMLElement():HTMLDivElement{
         const ItemDisplay = document.createElement('div')
-        ItemDisplay.innerHTML = `${this._name} ${this._price} ${this._description} <button class = 'add-one' id = 'a1${this._id}'>Add One</button>`
-        const AddButton = document.getElementById(`a1${this._id}`)
-        AddButton?.addEventListener('click',(_)=>{})
+        ItemDisplay.classList.add('row')
+        ItemDisplay.innerHTML = `<strong>${this._name}</strong><p>$${this._price} ${this._description}<p><button class = 'add-one' id = 'a1${this._id}'>Add One</button>`
         return ItemDisplay
     }
 }
@@ -97,7 +96,8 @@ class User{
     }
 
     cartTotal():number{
-        return this._cart.map((x)=>(x.price)).reduce((x,y)=>(x+y))
+
+        return this._cart.length?this._cart.map((x)=>(x.price)).reduce((x,y)=>(x+y)):0
     }
 
     printCart():void{
@@ -120,10 +120,11 @@ class User{
             }
         }
         const CartView = document.createElement('div')
-        let s = ''
+        let s = 'Your Cart:'
         for (const k in counts){
-            s += `<div class = 'row'>${k} ${prices[k]} ${counts[k]} <button class = 'remove-one' id = 'r1${ids[k]}'>Remove One</button><button class = 'remove-all' id = 'ra${ids[k]}'>Remove All</button></div>`
+            s += `<div class = 'row'><strong>${k}:</strong><p> $${prices[k]} Qty:${counts[k]} <p><button class = 'remove-one' id = 'r1${ids[k]}'>Remove One</button><button class = 'remove-all' id = 'ra${ids[k]}'>Remove All</button></div>`
         }
+        s += `<div class = 'row justify-content-center'><strong>Total:</strong> $${this.cartTotal()}</div>`
         CartView.innerHTML = s
         return CartView
     }
@@ -156,8 +157,13 @@ class Shop{
     ShowItems(){
         const ShopArea = document.getElementById('shoparea')
         for (let item of this._stock){
-            ShopArea?.appendChild(item.ItemHTMLElement())
-            console.log(item)
+            const itemRow = item.ItemHTMLElement()
+            ShopArea?.appendChild(itemRow)
+            const AddButton = document.getElementById(`a1${item.id}`)
+            AddButton?.addEventListener('click',(_)=>{
+                Shop.myUser?.addToCart(item)
+                this.UpdateCart()
+            })
         }
     }
 
@@ -165,7 +171,24 @@ class Shop{
         const CartArea = document.getElementById('cartarea')
         const EmptyMessage = document.createElement('div')
         EmptyMessage.innerHTML = 'Your cart is empty'
+        CartArea!.innerHTML=''
         Shop.myUser?.CartHTMLElement()?CartArea?.appendChild(Shop.myUser?.CartHTMLElement()):CartArea?.appendChild(EmptyMessage)
+        const RemoveOnes = document.getElementsByClassName('remove-one')
+        for (let i = 0; i < RemoveOnes.length; i ++){
+            RemoveOnes[i].addEventListener('click',(_)=>{
+                const toRemove = Shop.myUser!.cart.filter((it)=>it.id==RemoveOnes[i].id.slice(2))[0]
+                Shop.myUser!.removeQuantityFromCart(toRemove,1)
+                this.UpdateCart()
+            })
+        }
+        const RemoveAlls = document.getElementsByClassName('remove-all')
+        for (let i = 0; i < RemoveAlls.length; i ++){
+            RemoveAlls[i].addEventListener('click',(_)=>{
+                const toRemove = Shop.myUser!.cart.filter((it)=>it.id==RemoveOnes[i].id.slice(2))[0]
+                Shop.myUser!.removeFromCart(toRemove)
+                this.UpdateCart()
+            })
+        }
     }
 
     private _stock: Item[];
@@ -178,7 +201,7 @@ class Shop{
     constructor(){
         let itemA=new Item(uuidv4(),'lollipop',4,'licky licky')
         let itemB =new Item(uuidv4(),'laffy taffy',2,'sticky icky')
-        let itemC = new Item(uuidv4(),'chocolates',5,'yum yum')
+        let itemC = new Item(uuidv4(),'chocolates',5,'ooey gooey')
         let itemD = new Item(uuidv4(),'candy cane',1,'crickle crackle')
         let itemE = new Item(uuidv4(),'bubblegum',2,'pop!')
         let itemF = new Item(uuidv4(),'gummy worms',3,'creepy crawlie')
@@ -188,17 +211,6 @@ class Shop{
     }
     
 }
-
-const RemoveOnes = document.getElementsByClassName('remove-one')
-for (let i = 0; i < RemoveOnes.length; i ++){
-    RemoveOnes[i].addEventListener('click',(_)=>{})
-}
-
-const RemoveAlls = document.getElementsByClassName('remove-all')
-for (let i = 0; i < RemoveAlls.length; i ++){
-    RemoveAlls[i].addEventListener('click',(_)=>{})
-}
-
 
 const loginbutton = <HTMLInputElement>document.getElementById('submitbutton')
 loginbutton.addEventListener('click',(event)=>Shop.loginUser(event))
